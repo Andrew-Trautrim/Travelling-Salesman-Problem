@@ -35,7 +35,7 @@ void TSP::minimumSpanningTree(int graph[N][N], int mst[N][N]) {
 	for(int i = 0; i < N; ++i) {
 		visited[i] = 0;
 		for(int j = 0; j < N; ++j) {
-			mst[i][j] = I; // subgraph represents the MST in an adjacency matrix
+			mst[i][j] = I; // all verticies initially set to infinite 
 		}
 	}
 	visited[0] = 1;
@@ -45,6 +45,33 @@ void TSP::minimumSpanningTree(int graph[N][N], int mst[N][N]) {
 		mst[from][to] = graph[from][to];
 		mst[to][from] = graph[to][from];
 		visited[to] = 1;
+	}
+
+	return;
+}
+
+// creates a graph connecting all odd degree verticies
+void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
+	
+	// initially sets all values in adjacency matrix to infinite
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			oddDegree[i][j] = I;
+		}
+	}
+
+	for(int i = 0; i < N; ++i) {
+		// checks if current vertex has an odd degree
+		if(degree[i] % 2 == 1) {
+			for(int j = 0; j < N; ++j) {
+				// checks if pssible next vertex also has odd degree
+				if(degree[j] % 2 == 1) {
+					// connects verticies
+					oddDegree[i][j] = graph[i][j];
+					oddDegree[j][i] = graph[j][i];
+				}
+			}
+		}
 	}
 
 	return;

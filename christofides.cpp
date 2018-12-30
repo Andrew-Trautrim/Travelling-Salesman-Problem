@@ -47,8 +47,18 @@ int main(void) {
 	int degree[N];
 	christofide.getVertexDegree(mst, degree);
 
-	for(int i = 0; i < N; ++i) {
-		cout << i << " : " << degree[i] << endl;
+	int oddDegree[N][N];
+	christofide.oddDegree(graph, degree, oddDegree);
+
+	cout << endl << endl;
+	for(int y = 0; y < N; ++y) {
+		for(int x = 0; x < N; ++x) {
+			if(oddDegree[y][x] == I)
+				cout << "- ";
+			else
+				cout << oddDegree[y][x] << " ";
+		}
+		cout << endl;
 	}
 
 	return 0;

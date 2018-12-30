@@ -14,8 +14,9 @@ class TSP {
 public:	
 
 	void combine(int graph1[N][N], int graph2[N][N]); // combines two given graphs
-	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex
+	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex 
 	void minimumSpanningTree(int graph[N][N], int mst[N][N]); // function creates adjacency matrix representing a MST of a given graph
+	void oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]); // function creates graph out of odd degree verticies
 
 private:
 

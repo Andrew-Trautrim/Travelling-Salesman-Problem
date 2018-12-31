@@ -1,5 +1,34 @@
 #include "TSP.h"
 
+// counts he number of edges in a given graph
+int TSP::edgeCount(int graph[N][N], bool complete) {
+	if(complete) 
+		return (N * (N - 1)) / 2; // if a complete graph, number of edgs is given by the formula
+	
+	int count = 0;
+	for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N; ++j)
+			if(graph[i][j] != I && j > i) // if there is an edge and it hasnt already been counted
+				count++;
+	return count;
+}
+
+// recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
+// uses a bactracking algorithm
+void TSP::eulerianCircuit(int graph[N][N], int v, int visited[N][N]) {
+	
+	int from = v;
+	int to;
+
+	if(!getNextEdge(from, &to, graph, visited))
+		return;
+
+	for(int i = 0; i < n; ++i) {
+	}
+
+	return;
+}
+
 // combines two graphs
 void TSP::combine(int graph1[N][N], int graph2[N][N]) {
 	
@@ -75,6 +104,25 @@ void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 	}
 
 	return;
+}
+
+// redirects path to avoid repeated verticies to create a hamiltonian circuit
+// hc - hamiltionian circuit
+void TSP::removeRepeatedVerticies(int graph[N][N], int hc[N][N]) {
+	return;
+}
+
+// finds the next available node in a given graph
+bool getNextEdge(int from, int *to, int visited[N][N]) {
+	for(int i = 0; i < N; ++i) {
+		if(visited[from][i] != I) { // if if hasnt been visited
+			visited[from][i] = I; // the edge is declared as visited
+			visited[i][from] = I;
+			*to = i;
+			return true;
+		}
+	}
+	return false;
 }
 
 // searches for the smallest weight that connects a visited to an unvisited vertex

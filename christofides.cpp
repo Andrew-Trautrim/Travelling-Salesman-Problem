@@ -16,6 +16,7 @@ int main(void) {
 
 	TSP christofide;
 
+	/*
 	// step 1 - complete undirected weighted graph G
 	// adjacency matrix representing the graph
 	int graph[N][N] = {{ I,  9,  3,  2, 10},
@@ -90,10 +91,32 @@ int main(void) {
 		}
 		cout << endl;
 	}
+	*/
 
 	// step 7: create Eulerian Circuit from the combined graph
-	int edgeCount = christofide.edgeCount(mst, false);
-	cout << endl << "# edges: " << edgeCount << endl;
+	int graph[N][N] = {{ I, 10,  I,  I,  I,  5, 15,  5,  I,  I},
+			   {10,  I,  5,  I,  I,  I,  I,  I, 15,  5},
+			   { I,  5,  I,  5,  I,  I,  I,  I,  I,  I},
+			   { I,  I,  5,  I, 10,  I,  I,  I,  I,  I},
+			   { I,  I,  I, 10,  I,  5,  I,  I,  I,  I},
+			   { 5,  I,  I,  I,  5,  I,  I,  I,  I,  I},
+			   {15,  I,  I,  I,  I,  I,  I,  5,  I,  I},
+			   { 5,  I,  I,  I,  I,  I,  5,  I,  I,  I},
+			   { I, 15,  I,  I,  I,  I,  I,  I,  I, 10},
+			   { I,  5,  I,  I,  I,  I,  I,  I, 10,  I}
+			  };
+	int visited[N][N] = {{I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I},
+			     {I, I, I, I, I, I, I, I, I, I}
+			    };
+	christofide.eulerianCircuit(graph, 0, visited);
 
 	// step 8: remove repeated verticies
 

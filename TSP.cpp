@@ -15,18 +15,30 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
-void TSP::eulerianCircuit(int graph[N][N], int v, int visited[N][N]) {
+bool TSP::eulerianCircuit(int graph[N][N], int v, int visited[N][N]) {
 	
+	if(compare(graph, visited))
+		return true;
+
 	int from = v;
 	int to;
 
-	if(!getNextEdge(from, &to, graph, visited))
-		return;
-
-	for(int i = 0; i < n; ++i) {
+	for(int i = 0; i < N; ++i) {
+		if(graph[from][i] != I && visited[from][i] == I) {
+			to = i;
+			visited[from][to] = graph[from][to];
+			visited[to][from] = graph[to][from];
+			cout << from << " -> " << to << " : ";
+			if(eulerianCircuit(graph, to, visited))
+				return true;
+			
+			cout << endl;
+			visited[from][to] = I;
+			visited[to][from] = I;		
+		}
 	}
 
-	return;
+	return false;
 }
 
 // combines two graphs
@@ -113,16 +125,13 @@ void TSP::removeRepeatedVerticies(int graph[N][N], int hc[N][N]) {
 }
 
 // finds the next available node in a given graph
-bool getNextEdge(int from, int *to, int visited[N][N]) {
-	for(int i = 0; i < N; ++i) {
-		if(visited[from][i] != I) { // if if hasnt been visited
-			visited[from][i] = I; // the edge is declared as visited
-			visited[i][from] = I;
-			*to = i;
-			return true;
-		}
-	}
-	return false;
+bool TSP::compare(int graph1[N][N], int graph2[N][N]) {
+	for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N; ++j) 
+			if(graph1[i][j] != graph2[i][j])
+				return false;
+
+	return true;
 }
 
 // searches for the smallest weight that connects a visited to an unvisited vertex

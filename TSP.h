@@ -1,11 +1,12 @@
 #ifndef TSP_H
 #define TSP_H
 
-#define N 5   // size of graph
+#define N 10   // size of graph
 #define I 999 // infinite
 #define U -1  // undefinded
 
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -15,7 +16,8 @@ public:
 
 	int edgeCount(int graph[N][N], bool complete); // calculates and returns the number of edges in a given graph
 
-	void eulerianCircuit(int graph[N][N], int edgeCount, int ec[N][N]); // creates an Eulerian Circuit from a given graph
+	bool eulerianCircuit(int graph[N][N], int v, int visited[N][N]); // creates an Eulerian Circuit from a given graph
+
 	void combine(int graph1[N][N], int graph2[N][N]); // combines two given graphs
 	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex 
 	void minimumSpanningTree(int graph[N][N], int mst[N][N]); // function creates adjacency matrix representing a MST of a given graph
@@ -24,7 +26,7 @@ public:
 
 private:
 
-	bool getNextEdge(int from, int *to, int graph[N][N], int visited[N][N]);
+	bool compare(int graph1[N][N], int graph2[N][N]); // returns true if the graphs are equal
 
 	void getMinimum(int *from, int *to, int visited[N], int graph[N][N]); // gets the smallest edge weight in a given adjacency matrix
 

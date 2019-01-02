@@ -15,31 +15,20 @@
 int main(void) {
 
 	TSP christofide;
-
-	/*
-	// step 1 - complete undirected weighted graph G
+	
+	// step 1 - complete undirected weighted graph, G
 	// adjacency matrix representing the graph
-	int graph[N][N] = {{ I,  9,  3,  2, 10},
-			   { 9,  I,  8,  7,  5},
-			   { 3,  8,  I,  4, 11},
-			   { 2,  7,  4,  I,  6},
-			   {10,  5, 11,  6,  I},
+	int graph[N][N] = {{ I, 26, 25, 23, 31, 18},
+			   {26,  I, 21, 22, 27, 29},
+			   {25, 21,  I, 24, 19, 20},
+			   {23, 22, 24,  I, 12, 30},
+			   {31, 27, 19, 12,  I, 25},
+			   {18, 29, 20, 30, 25,  I},
 			  };
 	
-	// step 2: calculate minimum spanning tree T from graph G
+	// step 2: calculate minimum spanning tree, T, from graph G
 	int mst[N][N];
 	christofide.minimumSpanningTree(graph, mst);
-
-	cout << "Minimum Spanning Tree - T" << endl;
-	for(int y = 0; y < N; ++y) {
-		for(int x = 0; x < N; ++x) {
-			if(mst[y][x] == I)
-				cout << "- ";
-			else
-				cout << mst[y][x] << " ";
-		}
-		cout << endl;
-	}
 
 	// step 3: calculate degree of verticies from T
 	int degree[N];
@@ -49,70 +38,29 @@ int main(void) {
 	int oddDegree[N][N];
 	christofide.oddDegree(graph, degree, oddDegree);
 
-	cout << endl << "Odd Degree" << endl;
-	for(int y = 0; y < N; ++y) {
-		for(int x = 0; x < N; ++x) {
-			if(oddDegree[y][x] == I)
-				cout << "- ";
-			else
-				cout << oddDegree[y][x] << " ";
-		}
-		cout << endl;
-	}
-
 	// step 5
 	// **TODO** MINIMUM-WEIGHT PERFECT MATCH
-	int perfectMatch[N][N] = {{I, I, I, I, I},
-				  {I, I, 8, I, I},
-				  {I, 8, I, I, I},
-				  {I, I, I, I, I},
-				  {I, I, I, I, I}
+	int perfectMatch[N][N] = {{ I,  I, 25,  I,  I,  I},
+				  { I,  I,  I, 22,  I,  I},
+				  {25,  I,  I,  I,  I,  I},
+				  { I, 22,  I,  I,  I,  I},
+				  { I,  I,  I,  I,  I,  I},
+				  { I,  I,  I,  I,  I,  I}
 				 };
-	cout << endl << "Minimum-weight perfect match - M" << endl;
-	for(int i = 0; i < N; ++i) {
-		for(int j = 0; j < N; ++j) {
-			if(perfectMatch[i][j] == I) 
-				cout << "- ";
-			else
-				cout << perfectMatch[i][j] << " ";
-		}
-		cout << endl;
-	}
 
 	// step 6: combine minimum-weight perfect match with the minimum spanning tree
 	christofide.combine(mst, perfectMatch);
-	cout << endl << "M u T" << endl;
-	for(int i = 0; i < N; ++i) {
-		for(int j = 0; j < N; ++j) {
-			if(mst[i][j] == I) 
-				cout << "- ";
-			else
-				cout << mst[i][j] << " ";
-		}
-		cout << endl;
-	}
-	*/
-
+	
 	// step 7: create Eulerian Circuit from the combined graph
-	int graph[N][N] = {{ I, 10,  I,  I,  I,  5, 15,  5,  I,  I},
-			   {10,  I,  5,  I,  I,  I,  I,  I, 15,  5},
-			   { I,  5,  I,  5,  I,  I,  I,  I,  I,  I},
-			   { I,  I,  5,  I, 10,  I,  I,  I,  I,  I},
-			   { I,  I,  I, 10,  I,  5,  I,  I,  I,  I},
-			   { 5,  I,  I,  I,  5,  I,  I,  I,  I,  I},
-			   {15,  I,  I,  I,  I,  I,  I,  5,  I,  I},
-			   { 5,  I,  I,  I,  I,  I,  5,  I,  I,  I},
-			   { I, 15,  I,  I,  I,  I,  I,  I,  I, 10},
-			   { I,  5,  I,  I,  I,  I,  I,  I, 10,  I}
-			  };
-	int edgeCount = christofide.edgeCount(graph, false);
+	int edgeCount = christofide.edgeCount(mst, false);
 	int from[edgeCount], to[edgeCount];
-	christofide.eulerianCircuit(graph, 0, 0, edgeCount, from, to);
-	for(int i = 0; i < edgeCount; ++i) {
-		cout << from[i] << " : " << to[i] << endl;
-	}
-	// step 8: remove repeated verticies
+	christofide.eulerianCircuit(mst, 0, 0, edgeCount, from, to);
 
+	// step 8: remove repeated verticies
+	int circuit[N][N];
+	christofide.removeRepeatedVerticies(graph, from, to, edgeCount, circuit);
+	
+	christofide.printHamiltonianCircuit(circuit, 0);
 
 	return 0;
 }

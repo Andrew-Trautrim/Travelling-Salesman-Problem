@@ -15,16 +15,19 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
-bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int origin[], int target[]) {
+bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]) {
 	
-	if(e == edgeCount) // if all edges have been visited
+	// base case
+	// if all edges have been visited
+	// and the circuit starts and ends on the same vertex
+	if(e == edgeCount && from[0] == to[edgeCount - 1])
 		return true;
 
 	for(int i = 0; i < N; ++i) { // iterates through all possible connections from current vertex, v
-		if(graph[v][i] != I && !containsEdge(origin, target, v, i, edgeCount)) { // if a connection can be made and the edge hasn't been visited
-			origin[e] = v; // v represents current vertex
-			target[e] = i; // i represents the next vertex in the circuit
-			if(eulerianCircuit(graph, i, ++e, edgeCount, origin, target))
+		if(graph[v][i] != I && !containsEdge(from, to, v, i, edgeCount)) { // if a connection can be made and the edge hasn't been visited
+			from[e] = v; // v represents current vertex
+			to[e] = i; // i represents the next vertex in the circuit
+			if(eulerianCircuit(graph, i, ++e, edgeCount, from, to))
 				return true;
 			
 			e--; // resets values if no solution exists from the last position, backtracks to the next possible value
@@ -111,17 +114,49 @@ void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 	return;
 }
 
-// redirects path to avoid repeated verticies to create a hamiltonian circuit
-// hc - hamiltionian circuit
-void TSP::removeRepeatedVerticies(int graph[N][N], int hc[N][N]) {
+// redirects path to avoid repeated verticies to create a hamiltonian circuit, i.e. the output of Christofides algorithm
+void TSP::removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCount, int circuit[N][N]) {
+
+	initialize(circuit);
+
+	int visited[N];
+	int pos = from[0]; // start at the beginning of the circuit
+
+	for(int i = 0; i < edgeCount; ++i) {
+		visited[pos] = 1;
+		int f = from[i];
+		int t = to[i];
+		if(visited[t] == 1 && t != from[0]) { // if vertex has already been visited and its not the end of the circuit
+			t = to[i + 1]; // skip to next vertex
+			i++;
+		}
+		circuit[f][t] = graph[f][t];
+		pos = t;
+	}
+
+	return;
+}
+
+// prints the path of a given circuit from a starting position
+void TSP::printHamiltonianCircuit(int circuit[N][N], int pos) {
+
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(circuit[pos][j] != I) {
+				cout << pos << " -> " << j << endl;
+				pos = j; // moves to the next vertex
+				break;
+			}
+		}
+	}
 	return;
 }
 
 // utility function
-// checks if a given edge is in a given set of edges
-bool TSP::containsEdge(int origin[], int target[], int from, int to, int edgeCount) {
+// checks if an edge is in a given set of edges
+bool TSP::containsEdge(int from[], int to[], int f, int t, int edgeCount) {
 	for(int i = 0; i < edgeCount; ++i)
-		if((origin[i] == from && target[i] == to) || (origin[i] == to && target[i] == from)) 
+		if((from[i] == f && to[i] == t) || (from[i] == t && to[i] == f)) 
 			return true;
 
 	return false;
@@ -152,5 +187,13 @@ void TSP::getMinimum(int *from, int *to, int visited[N], int graph[N][N]) {
 			}
 		}
 	}
+	return;
+}
+
+// initializes all values in a given adjacency matrix to infinite
+void TSP::initialize(int graph[N][N]) {
+	for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N; ++j)
+			graph[i][j] = I;
 	return;
 }

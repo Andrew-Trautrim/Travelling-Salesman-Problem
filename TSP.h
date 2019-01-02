@@ -16,7 +16,7 @@ public:
 
 	int edgeCount(int graph[N][N], bool complete); // calculates and returns the number of edges in a given graph
 
-	bool eulerianCircuit(int graph[N][N], int v, int visited[N][N]); // creates an Eulerian Circuit from a given graph
+	bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int origin[], int dest[]); // creates an Eulerian Circuit from a given graph
 
 	void combine(int graph1[N][N], int graph2[N][N]); // combines two given graphs
 	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex 
@@ -27,6 +27,7 @@ public:
 private:
 
 	bool compare(int graph1[N][N], int graph2[N][N]); // returns true if the graphs are equal
+	bool containsEdge(int origin[], int target[N], int from, int to, int edgeCount); // checks if a specific edge is in a given set of edges
 
 	void getMinimum(int *from, int *to, int visited[N], int graph[N][N]); // gets the smallest edge weight in a given adjacency matrix
 

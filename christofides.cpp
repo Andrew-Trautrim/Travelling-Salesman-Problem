@@ -105,19 +105,12 @@ int main(void) {
 			   { I, 15,  I,  I,  I,  I,  I,  I,  I, 10},
 			   { I,  5,  I,  I,  I,  I,  I,  I, 10,  I}
 			  };
-	int visited[N][N] = {{I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I},
-			     {I, I, I, I, I, I, I, I, I, I}
-			    };
-	christofide.eulerianCircuit(graph, 0, visited);
-
+	int edgeCount = christofide.edgeCount(graph, false);
+	int from[edgeCount], to[edgeCount];
+	christofide.eulerianCircuit(graph, 0, 0, edgeCount, from, to);
+	for(int i = 0; i < edgeCount; ++i) {
+		cout << from[i] << " : " << to[i] << endl;
+	}
 	// step 8: remove repeated verticies
 
 

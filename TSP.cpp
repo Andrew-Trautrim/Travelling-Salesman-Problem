@@ -15,26 +15,19 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
-bool TSP::eulerianCircuit(int graph[N][N], int v, int visited[N][N]) {
+bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int origin[], int target[]) {
 	
-	if(compare(graph, visited))
+	if(e == edgeCount) // if all edges have been visited
 		return true;
 
-	int from = v;
-	int to;
-
-	for(int i = 0; i < N; ++i) {
-		if(graph[from][i] != I && visited[from][i] == I) {
-			to = i;
-			visited[from][to] = graph[from][to];
-			visited[to][from] = graph[to][from];
-			cout << from << " -> " << to << " : ";
-			if(eulerianCircuit(graph, to, visited))
+	for(int i = 0; i < N; ++i) { // iterates through all possible connections from current vertex, v
+		if(graph[v][i] != I && !containsEdge(origin, target, v, i, edgeCount)) { // if a connection can be made and the edge hasn't been visited
+			origin[e] = v; // v represents current vertex
+			target[e] = i; // i represents the next vertex in the circuit
+			if(eulerianCircuit(graph, i, ++e, edgeCount, origin, target))
 				return true;
 			
-			cout << endl;
-			visited[from][to] = I;
-			visited[to][from] = I;		
+			e--; // resets values if no solution exists from the last position, backtracks to the next possible value
 		}
 	}
 
@@ -122,6 +115,16 @@ void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 // hc - hamiltionian circuit
 void TSP::removeRepeatedVerticies(int graph[N][N], int hc[N][N]) {
 	return;
+}
+
+// utility function
+// checks if a given edge is in a given set of edges
+bool TSP::containsEdge(int origin[], int target[], int from, int to, int edgeCount) {
+	for(int i = 0; i < edgeCount; ++i)
+		if((origin[i] == from && target[i] == to) || (origin[i] == to && target[i] == from)) 
+			return true;
+
+	return false;
 }
 
 // finds the next available node in a given graph

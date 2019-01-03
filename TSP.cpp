@@ -13,6 +13,22 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 	return count;
 }
 
+// utility function, determines number of verticies from an arbitrarily sized adcacency matrix
+int vertexCount(int graph[N][N]) {
+	int count = 0;
+	
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(graph[i][j] != I && j > i) {
+				count++;
+				break;
+			}
+		}
+	}
+
+	return count;
+}
+
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
 bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]) {
@@ -31,6 +47,31 @@ bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from
 				return true;
 			
 			e--; // resets values if no solution exists from the last position, backtracks to the next possible value
+		}
+	}
+
+	return false;
+}
+
+// recursive function calculates the minimum cost perfect match of a graph
+// i.e. a set of edges without common verticies with the smallest weight
+bool TSP::minimumCostPerfectMatch(int graph[N][N], int v, int match[N][N]) {
+
+	// base case
+	// if all verticies have been connected
+	if(vertexCount(match) == v)
+		return true;
+	
+	// recursive case
+	// starts with an arbitrary connection and sees if a perfect match can be made from there
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(match[i][j] == I && graph[i][j] != I) { // if vertext hasn't been visited and connection exists on the original graph			
+				match[i][j] = graph[i][j];
+				match[j][i] = graph[j][i];
+				if(minimumCostPerfectMatch(graph, v, match)) // if solution exists from this point
+					return true;
+			}
 		}
 	}
 
@@ -170,6 +211,17 @@ bool TSP::compare(int graph1[N][N], int graph2[N][N]) {
 				return false;
 
 	return true;
+}
+
+// utility function for calculating total weight of a graph
+// i.e. sum of all edge weights
+int getWeight(int graph[N][N]) {
+	int weight;
+	for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N; ++j)
+			if(graph[i][j] != I && j > i) // if edge exists and it hasn't already been accounted for 
+				weight += graph[i][j];
+	return weight; // returns the total weight
 }
 
 // searches for the smallest weight that connects a visited to an unvisited vertex

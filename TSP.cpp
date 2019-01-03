@@ -1,5 +1,24 @@
 #include "TSP.h"
 
+void TSP::printMatrix(int matrix[N][N]) {
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(matrix[i][j] == I) {
+				cout << " - ";
+			}
+			else {
+				if(matrix[i][j] >= 10) 
+					cout << matrix[i][j] << " ";
+				else 
+					cout << " " << matrix[i][j] << " ";
+			}
+		}
+		cout << endl;
+	}
+	cout << endl;
+	return;
+}
+
 // counts he number of edges in a given graph
 int TSP::edgeCount(int graph[N][N], bool complete) {
 	if(complete) 
@@ -10,22 +29,6 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 		for(int j = 0; j < N; ++j)
 			if(graph[i][j] != I && j > i) // if there is an edge and it hasnt already been counted
 				count++;
-	return count;
-}
-
-// utility function, determines number of verticies from an arbitrarily sized adcacency matrix
-int vertexCount(int graph[N][N]) {
-	int count = 0;
-	
-	for(int i = 0; i < N; ++i) {
-		for(int j = 0; j < N; ++j) {
-			if(graph[i][j] != I && j > i) {
-				count++;
-				break;
-			}
-		}
-	}
-
 	return count;
 }
 
@@ -47,31 +50,6 @@ bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from
 				return true;
 			
 			e--; // resets values if no solution exists from the last position, backtracks to the next possible value
-		}
-	}
-
-	return false;
-}
-
-// recursive function calculates the minimum cost perfect match of a graph
-// i.e. a set of edges without common verticies with the smallest weight
-bool TSP::minimumCostPerfectMatch(int graph[N][N], int v, int match[N][N]) {
-
-	// base case
-	// if all verticies have been connected
-	if(vertexCount(match) == v)
-		return true;
-	
-	// recursive case
-	// starts with an arbitrary connection and sees if a perfect match can be made from there
-	for(int i = 0; i < N; ++i) {
-		for(int j = 0; j < N; ++j) {
-			if(match[i][j] == I && graph[i][j] != I) { // if vertext hasn't been visited and connection exists on the original graph			
-				match[i][j] = graph[i][j];
-				match[j][i] = graph[j][i];
-				if(minimumCostPerfectMatch(graph, v, match)) // if solution exists from this point
-					return true;
-			}
 		}
 	}
 
@@ -155,6 +133,15 @@ void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 	return;
 }
 
+// removes similar edges in two different graphs
+void TSP::removeCommonEdges(int graph1[N][N], int graph2[N][N]) {
+	for(int i = 0; i < N; ++i)
+		for(int j = 0; j < N; ++j)
+			if(graph1[i][j] == graph2[i][j]) 
+				graph1[i][j] = I;
+	return;	
+}
+
 // redirects path to avoid repeated verticies to create a hamiltonian circuit, i.e. the output of Christofides algorithm
 void TSP::removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCount, int circuit[N][N]) {
 
@@ -211,17 +198,6 @@ bool TSP::compare(int graph1[N][N], int graph2[N][N]) {
 				return false;
 
 	return true;
-}
-
-// utility function for calculating total weight of a graph
-// i.e. sum of all edge weights
-int getWeight(int graph[N][N]) {
-	int weight;
-	for(int i = 0; i < N; ++i)
-		for(int j = 0; j < N; ++j)
-			if(graph[i][j] != I && j > i) // if edge exists and it hasn't already been accounted for 
-				weight += graph[i][j];
-	return weight; // returns the total weight
 }
 
 // searches for the smallest weight that connects a visited to an unvisited vertex

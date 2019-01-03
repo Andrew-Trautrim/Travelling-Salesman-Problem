@@ -25,10 +25,14 @@ int main(void) {
 			   {31, 27, 19, 12,  I, 25},
 			   {18, 29, 20, 30, 25,  I},
 			  };
-	
+	cout << "Complete Undirected Wighted Graph - G" << endl;
+	christofide.printMatrix(graph);
+
 	// step 2: calculate minimum spanning tree, T, from graph G
 	int mst[N][N];
 	christofide.minimumSpanningTree(graph, mst);
+	cout << "Minimum Spanning Tree - T" << endl;
+	christofide.printMatrix(mst);
 
 	// step 3: calculate degree of verticies from T
 	int degree[N];
@@ -37,6 +41,12 @@ int main(void) {
 	// step 4: subgraph of G from odd degree verticies given by T
 	int oddDegree[N][N];
 	christofide.oddDegree(graph, degree, oddDegree);
+	cout << "Odd Degree Verticies of T Subgraph of G - O" << endl;
+	christofide.printMatrix(oddDegree);
+
+	cout << "Common edges between O & T removed" << endl;
+	christofide.removeCommonEdges(oddDegree, mst);
+	christofide.printMatrix(oddDegree);
 
 	// step 5
 	// **TODO** MINIMUM-WEIGHT PERFECT MATCH
@@ -47,9 +57,13 @@ int main(void) {
 				  { I,  I,  I,  I,  I,  I},
 				  { I,  I,  I,  I,  I,  I}
 				 };
+	cout << "Minimum Cost Perfect Match of O - M" << endl;
+	christofide.printMatrix(perfectMatch);
 
 	// step 6: combine minimum-weight perfect match with the minimum spanning tree
 	christofide.combine(mst, perfectMatch);
+	cout << "M U T" << endl;
+	christofide.printMatrix(mst);
 	
 	// step 7: create Eulerian Circuit from the combined graph
 	int edgeCount = christofide.edgeCount(mst, false);
@@ -59,6 +73,8 @@ int main(void) {
 	// step 8: remove repeated verticies
 	int circuit[N][N];
 	christofide.removeRepeatedVerticies(graph, from, to, edgeCount, circuit);
+	cout << "Hamiltonian Circuit" << endl;
+	christofide.printMatrix(circuit);
 	
 	christofide.printHamiltonianCircuit(circuit, 0);
 

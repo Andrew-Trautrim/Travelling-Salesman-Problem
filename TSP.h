@@ -17,7 +17,7 @@ public:
 	int edgeCount(int graph[N][N], bool complete); // calculates and returns the number of edges in a given graph
 
 	bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]); // creates an Eulerian Circuit from a given graph
-	bool minimumCostPerfectMatch(int graph[N][N], int v, int match[N][N]); // calculates minimum cost perfect match of a given graph
+	bool minimumCostPerfectMatch(int graph[N][N], int v, int vertexCount, int match[N][N]); // calculates minimum cost perfect match of a given graph
 
 	void combine(int graph1[N][N], int graph2[N][N]); // combines two given graphs
 	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex 
@@ -26,6 +26,7 @@ public:
 	void removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCount, int circuit[N][N]); // removes all repeating verticies, directs path elsewhere
 	void removeCommonEdges(int graph1[N][N], int graph2[N][N]); // removes common edges between two graphs
 	void printHamiltonianCircuit(int circuit[N][N], int pos); // prints out the circuit from a given adjacency matrix, must be a hamiltonian circuit
+	void printMatrix(int matrix[N][N]); // temporary function, used for testing
 
 private:
 

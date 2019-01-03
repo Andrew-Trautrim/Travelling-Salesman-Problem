@@ -8,13 +8,13 @@ path. The problem lies in finding a path with the lowest possible cost. This is 
 result in a complexity of (N-1)! In order to solve this problem in polynomial time, an aproximation is the most reasonable solution.
 
 Christofides algorithm is the best aproximate solution to the trading salesman problem known to date.
-Algorithms pseudocode:
-    1. Create a minimum spanning tree T of G.
-    2. Let O be the set of vertices with odd degree in T. By the handshaking lemma, O has an even number of vertices.
-    3. Find a minimum-weight perfect matching M in the induced subgraph given by the vertices from O.
-    4. Combine the edges of M and T to form a connected multigraph H in which each vertex has even degree.
-    5. Form an Eulerian circuit in H.
-    6. Make the circuit found in previous step into a Hamiltonian circuit by skipping repeated vertices (shortcutting).
+Algorithms pseudocode:  
+    1. Create a minimum spanning tree T of G.  
+    2. Let O be the set of vertices with odd degree in T. By the handshaking lemma, O has an even number of vertices.  
+    3. Find a minimum-weight perfect matching M in the induced subgraph given by the vertices from O.  
+    4. Combine the edges of M and T to form a connected multigraph H in which each vertex has even degree.  
+    5. Form an Eulerian circuit in H.  
+    6. Make the circuit found in previous step into a Hamiltonian circuit by skipping repeated vertices (shortcutting).  
     
 This program does this by representing the given graph in an adjacency matrix
 

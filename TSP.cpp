@@ -32,6 +32,22 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 	return count;
 }
 
+// counts the number of verticies in a graph of arbitrary size
+int TSP::vertexCount(int graph[N][N]) {
+	int count = 0;
+
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(graph[i][j] != I) {
+				count++;
+				break;
+			}
+		}
+	}
+
+	return count;
+}
+
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
 bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]) {
@@ -50,6 +66,36 @@ bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from
 				return true;
 			
 			e--; // resets values if no solution exists from the last position, backtracks to the next possible value
+		}
+	}
+
+	return false;
+}
+
+// recursive function c
+bool TSP::perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
+	
+	// base case
+	if(v == vertexCount)
+		return true;
+
+	for(int i = 0; i < N; ++i) {
+		for(int j = 0; j < N; ++j) {
+			if(graph[i][j] != I && visited[i] == 0 && visited[j] == 0) {
+				visited[i] = 1;
+				visited[j] = 1;
+				match[i][j] = graph[i][j];
+				match[j][i] = graph[j][i];
+				v += 2;
+				if(perfectMatch(graph, v, vertexCount, visited, match)) // if solution exists from current point
+					return true;
+				// reset values if no solution is found
+				v -= 2;
+				visited[i] = 0;
+				visited[j] = 0;
+				match[i][j] = I;
+				match[j][i] = I;
+			}
 		}
 	}
 

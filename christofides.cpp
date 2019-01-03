@@ -24,7 +24,7 @@ int main(void) {
 			   {23, 22, 24,  I, 12, 30},
 			   {31, 27, 19, 12,  I, 25},
 			   {18, 29, 20, 30, 25,  I},
-			  };
+			  }; 
 	cout << "Complete Undirected Wighted Graph - G" << endl;
 	christofide.printMatrix(graph);
 
@@ -47,21 +47,25 @@ int main(void) {
 	cout << "Common edges between O & T removed" << endl;
 	christofide.removeCommonEdges(oddDegree, mst);
 	christofide.printMatrix(oddDegree);
-
+	
 	// step 5
 	// **TODO** MINIMUM-WEIGHT PERFECT MATCH
-	int perfectMatch[N][N] = {{ I,  I, 25,  I,  I,  I},
-				  { I,  I,  I, 22,  I,  I},
-				  {25,  I,  I,  I,  I,  I},
-				  { I, 22,  I,  I,  I,  I},
-				  { I,  I,  I,  I,  I,  I},
-				  { I,  I,  I,  I,  I,  I}
-				 };
-	cout << "Minimum Cost Perfect Match of O - M" << endl;
-	christofide.printMatrix(perfectMatch);
+	int vertexCount = christofide.vertexCount(oddDegree);
+	int match[N][N] = {{I, I, I, I, I, I},
+			{I, I, I, I, I, I},
+			{I, I, I, I, I, I},
+			{I, I, I, I, I, I},
+			{I, I, I, I, I, I},
+			{I, I, I, I, I, I}
+		       };
+	int visited[N] = {0, 0, 0, 0, 0, 0};
+	christofide.perfectMatch(oddDegree, 0, vertexCount, visited, match);
+
+	cout << "Perfect Match of O - M" << endl;
+	christofide.printMatrix(match);
 
 	// step 6: combine minimum-weight perfect match with the minimum spanning tree
-	christofide.combine(mst, perfectMatch);
+	christofide.combine(mst, match);
 	cout << "M U T" << endl;
 	christofide.printMatrix(mst);
 	
@@ -77,6 +81,6 @@ int main(void) {
 	christofide.printMatrix(circuit);
 	
 	christofide.printHamiltonianCircuit(circuit, 0);
-
+	
 	return 0;
 }

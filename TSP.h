@@ -15,9 +15,10 @@ class TSP {
 public:	
 
 	int edgeCount(int graph[N][N], bool complete); // calculates and returns the number of edges in a given graph
+	int vertexCount(int graph[N][N]); // calculates and returns the number of verticies
 
 	bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]); // creates an Eulerian Circuit from a given graph
-	bool minimumCostPerfectMatch(int graph[N][N], int v, int vertexCount, int match[N][N]); // calculates minimum cost perfect match of a given graph
+	bool perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]); // calculates minimum cost perfect match of a given graph
 
 	void combine(int graph1[N][N], int graph2[N][N]); // combines two given graphs
 	void getVertexDegree(int graph[N][N], int degree[N]); // function calculates the degree of each vertex 

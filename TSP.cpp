@@ -1,5 +1,7 @@
 #include "TSP.h"
 
+// utility test function
+// prints matrix for testing purposes
 void TSP::printMatrix(int matrix[N][N]) {
 	for(int i = 0; i < N; ++i) {
 		for(int j = 0; j < N; ++j) {
@@ -72,23 +74,33 @@ bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from
 	return false;
 }
 
-// recursive function c
+// recursive function finds a perfect match in a graph
+// i.e. every vertex is connected only once
 bool TSP::perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
+
+	// a perfect match can't be made with an odd number of verticies
+	if(vertexCount % 2 == 1)
+		return false;
 	
 	// base case
 	if(v == vertexCount)
 		return true;
 
+	// recursive case
 	for(int i = 0; i < N; ++i) {
 		for(int j = 0; j < N; ++j) {
+			// trys arbitrary connection
 			if(graph[i][j] != I && visited[i] == 0 && visited[j] == 0) {
 				visited[i] = 1;
 				visited[j] = 1;
 				match[i][j] = graph[i][j];
 				match[j][i] = graph[j][i];
 				v += 2;
+
+				// returns true if a solution is found from current connection
 				if(perfectMatch(graph, v, vertexCount, visited, match)) // if solution exists from current point
 					return true;
+
 				// reset values if no solution is found
 				v -= 2;
 				visited[i] = 0;

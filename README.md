@@ -16,21 +16,19 @@ My program does this by representing the given graph in an adjacency matrix
 
 Complete Undirected Wighted Graph - G  
 <pre>
- - 26 25 23 31 18  
-26  - 21 22 27 29  
-25 21  - 24 19 20  
-23 22 24  - 12 30  
-31 27 19 12  - 25  
-18 29 20 30 25  - 
+ - 37 51 50 46 
+37  - 44 41 48 
+51 44  - 28 33 
+50 41 28  - 53 
+46 48 33 53  - 
 </pre>
 
 Output  
 <pre>
-0 -> 2  
-2 -> 1  
-1 -> 3  
-3 -> 4  
-4 -> 5  
-5 -> 0  
+0 -> 1  
+1 -> 4  
+4 -> 3  
+3 -> 5  
+5 -> 0   
 Weight: 123
 </pre>

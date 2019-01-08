@@ -1,7 +1,7 @@
 #ifndef TSP_H
 #define TSP_H
 
-#define N 6   // size of graph
+#define N 5   // size of graph
 #define I 999 // infinite
 #define U -1  // undefinded
 

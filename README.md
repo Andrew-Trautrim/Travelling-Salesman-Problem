@@ -26,9 +26,9 @@ Complete Undirected Wighted Graph - G
 Output  
 <pre>
 0 -> 1  
-1 -> 4  
-4 -> 3  
-3 -> 5  
-5 -> 0   
-Weight: 123
+1 -> 3  
+3 -> 2  
+2 -> 4  
+4 -> 0   
+Weight: 139
 </pre>

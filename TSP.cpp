@@ -2,7 +2,7 @@
 
 // utility test function
 // prints matrix for testing purposes
-void TSP::printMatrix(int matrix[N][N]) {
+void printMatrix(int matrix[N][N]) {
 	for(int i = 0; i < N; ++i) {
 		for(int j = 0; j < N; ++j) {
 			if(matrix[i][j] == I) {
@@ -22,7 +22,7 @@ void TSP::printMatrix(int matrix[N][N]) {
 }
 
 // counts he number of edges in a given graph
-int TSP::edgeCount(int graph[N][N], bool complete) {
+int edgeCount(int graph[N][N], bool complete) {
 	if(complete) 
 		return (N * (N - 1)) / 2; // if a complete graph, number of edgs is given by the formula
 	
@@ -35,7 +35,7 @@ int TSP::edgeCount(int graph[N][N], bool complete) {
 }
 
 // counts the number of verticies in a graph of arbitrary size
-int TSP::vertexCount(int graph[N][N]) {
+int vertexCount(int graph[N][N]) {
 	int count = 0;
 
 	for(int i = 0; i < N; ++i) {
@@ -52,7 +52,7 @@ int TSP::vertexCount(int graph[N][N]) {
 
 // recursive fuction calculates an eulerian circuit i.e. every edge of the given graph is visited once
 // uses a bactracking algorithm
-bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]) {
+bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], int to[]) {
 	
 	// base case
 	// if all edges have been visited
@@ -76,7 +76,7 @@ bool TSP::eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from
 
 // recursive function finds a perfect match in a graph
 // i.e. every vertex is connected only once
-bool TSP::perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
+bool perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
 	
 	/*
 	 * Logically, it should be checked that the vertex count is even. A perfect match can only be made with an even number of verticies.
@@ -117,7 +117,7 @@ bool TSP::perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], 
 }
 
 // combines two graphs
-void TSP::combine(int graph1[N][N], int graph2[N][N]) {
+void combine(int graph1[N][N], int graph2[N][N]) {
 	
 	for(int i = 0; i < N; ++i)
 		for(int j = 0 ; j < N; ++j)
@@ -127,7 +127,7 @@ void TSP::combine(int graph1[N][N], int graph2[N][N]) {
 }
 
 // calculatess the degree of each vertex in a given graph
-void TSP::getVertexDegree(int graph[N][N], int degree[N]) {
+void getVertexDegree(int graph[N][N], int degree[N]) {
 	
 	// iterates through the entire 2D array to count how many conections each vertex has
 	for(int i = 0; i < N; ++i) {
@@ -145,7 +145,7 @@ void TSP::getVertexDegree(int graph[N][N], int degree[N]) {
  * Function creates and returns a Minimum Spanning Tree (MST) in the form of an adjacency matrix
  * Calculated using Prim's algorithm
  */
-void TSP::minimumSpanningTree(int graph[N][N], int mst[N][N]) {
+void minimumSpanningTree(int graph[N][N], int mst[N][N]) {
 	int visited[N], from, to;
 
 	for(int i = 0; i < N; ++i) {
@@ -167,7 +167,7 @@ void TSP::minimumSpanningTree(int graph[N][N], int mst[N][N]) {
 }
 
 // creates a graph connecting all odd degree verticies
-void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
+void oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 	
 	// initially sets all values in adjacency matrix to infinite
 	for(int i = 0; i < N; ++i) {
@@ -194,7 +194,7 @@ void TSP::oddDegree(int graph[N][N], int degree[N], int oddDegree[N][N]) {
 }
 
 // removes similar edges in two different graphs
-void TSP::removeCommonEdges(int graph1[N][N], int graph2[N][N]) {
+void removeCommonEdges(int graph1[N][N], int graph2[N][N]) {
 	for(int i = 0; i < N; ++i)
 		for(int j = 0; j < N; ++j)
 			if(graph1[i][j] == graph2[i][j]) 
@@ -203,7 +203,7 @@ void TSP::removeCommonEdges(int graph1[N][N], int graph2[N][N]) {
 }
 
 // redirects path to avoid repeated verticies to create a hamiltonian circuit, i.e. the output of Christofides algorithm
-void TSP::removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCount, int circuit[N][N]) {
+void removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCount, int circuit[N][N]) {
 
 	initialize(circuit);
 
@@ -226,7 +226,7 @@ void TSP::removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edg
 }
 
 // prints the path of a given circuit from a starting position
-void TSP::printHamiltonianCircuit(int circuit[N][N], int pos) {
+void printHamiltonianCircuit(int circuit[N][N], int pos) {
 
 	for(int i = 0; i < N; ++i) {
 		for(int j = 0; j < N; ++j) {
@@ -242,7 +242,7 @@ void TSP::printHamiltonianCircuit(int circuit[N][N], int pos) {
 
 // utility function
 // checks if an edge is in a given set of edges
-bool TSP::containsEdge(int from[], int to[], int f, int t, int edgeCount) {
+bool containsEdge(int from[], int to[], int f, int t, int edgeCount) {
 	for(int i = 0; i < edgeCount; ++i)
 		if((from[i] == f && to[i] == t) || (from[i] == t && to[i] == f)) 
 			return true;
@@ -251,7 +251,7 @@ bool TSP::containsEdge(int from[], int to[], int f, int t, int edgeCount) {
 }
 
 // finds the next available node in a given graph
-bool TSP::compare(int graph1[N][N], int graph2[N][N]) {
+bool compare(int graph1[N][N], int graph2[N][N]) {
 	for(int i = 0; i < N; ++i)
 		for(int j = 0; j < N; ++j) 
 			if(graph1[i][j] != graph2[i][j])
@@ -261,7 +261,7 @@ bool TSP::compare(int graph1[N][N], int graph2[N][N]) {
 }
 
 // searches for the smallest weight that connects a visited to an unvisited vertex
-void TSP::getMinimum(int *from, int *to, int visited[N], int graph[N][N]) {
+void getMinimum(int *from, int *to, int visited[N], int graph[N][N]) {
 	int min = I;
 
 	// i represents the current node
@@ -279,7 +279,7 @@ void TSP::getMinimum(int *from, int *to, int visited[N], int graph[N][N]) {
 }
 
 // initializes all values in a given adjacency matrix to infinite
-void TSP::initialize(int graph[N][N]) {
+void initialize(int graph[N][N]) {
 	for(int i = 0; i < N; ++i)
 		for(int j = 0; j < N; ++j)
 			graph[i][j] = I;

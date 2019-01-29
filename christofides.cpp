@@ -13,8 +13,6 @@
  * Step 6: Change the circuit into a Hamiltonian Circuit by skipping repeated verticies
  */
 int main(void) {
-
-	TSP christofide;
 	
 	// complete undirected weighted graph, G
 	// adjacency matrix representing the graph
@@ -25,31 +23,31 @@ int main(void) {
 			   {46, 48, 33, 53,  I}
 			  }; 
 	cout << "Complete Undirected Wighted Graph - G" << endl;
-	christofide.printMatrix(graph);
+	printMatrix(graph);
 
 	// step 1: calculate minimum spanning tree T of G
 	int mst[N][N];
-	christofide.minimumSpanningTree(graph, mst);
+	minimumSpanningTree(graph, mst);
 	cout << "Minimum Spanning Tree - T" << endl;
-	christofide.printMatrix(mst);
+	printMatrix(mst);
 
 	// step 2: calculate odd degree of verticies from T
 	int degree[N];
-	christofide.getVertexDegree(mst, degree);
+	getVertexDegree(mst, degree);
 
 	// graph of odd degree verticies O
-	int oddDegree[N][N];
-	christofide.oddDegree(graph, degree, oddDegree);
+	int odd[N][N];
+	oddDegree(graph, degree, odd);
 	cout << "Odd Degree Verticies of T Subgraph of G - O" << endl;
-	christofide.printMatrix(oddDegree);
+	printMatrix(odd);
 
 	cout << "Common edges between O & T removed" << endl;
-	christofide.removeCommonEdges(oddDegree, mst);
-	christofide.printMatrix(oddDegree);
+	removeCommonEdges(odd, mst);
+	printMatrix(odd);
 	
 	// step 3 minimum-weight perfect match
 	// **TODO** MINIMUM-WEIGHT PERFECT MATCH
-	int vertexCount = christofide.vertexCount(oddDegree);
+	int vCount = vertexCount(odd);
 	int match[N][N] = {{I, I, I, I, I},
 			   {I, I, I, I, I},
 			   {I, I, I, I, I},
@@ -57,28 +55,28 @@ int main(void) {
 			   {I, I, I, I, I}
 			  };
 	int visited[N] = {0, 0, 0, 0, 0};
-	christofide.perfectMatch(oddDegree, 0, vertexCount, visited, match);
+	perfectMatch(odd, 0, vCount, visited, match);
 
 	cout << "Perfect Match of O - M" << endl;
-	christofide.printMatrix(match);
+	printMatrix(match);
 
 	// step 4: combine minimum-weight perfect match with the minimum spanning tree
-	christofide.combine(mst, match);
+	combine(mst, match);
 	cout << "M U T" << endl;
-	christofide.printMatrix(mst);
+	printMatrix(mst);
 	
 	// step 5: create Eulerian Circuit from the combined graph
-	int edgeCount = christofide.edgeCount(mst, false);
-	int from[edgeCount], to[edgeCount];
-	christofide.eulerianCircuit(mst, 0, 0, edgeCount, from, to);
+	int eCount = edgeCount(mst, false);
+	int from[eCount], to[eCount];
+	eulerianCircuit(mst, 0, 0, eCount, from, to);
 
 	// step 6: remove repeated verticies creating a hamiltonian circuit
 	int circuit[N][N];
-	christofide.removeRepeatedVerticies(graph, from, to, edgeCount, circuit);
+	removeRepeatedVerticies(graph, from, to, eCount, circuit);
 	cout << "Hamiltonian Circuit" << endl;
-	christofide.printMatrix(circuit);
+	printMatrix(circuit);
 	
-	christofide.printHamiltonianCircuit(circuit, 0);
+	printHamiltonianCircuit(circuit, 0);
 	
 	return 0;
 }

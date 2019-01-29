@@ -76,10 +76,11 @@ bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], i
 
 // recursive function finds a perfect match in a graph
 // i.e. every vertex is connected only once
+// TODO minimum weight
 bool perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
 	
 	/*
-	 * Logically, it should be checked that the vertex count is even. A perfect match can only be made with an even number of verticies.
+	 * Logically, it should be checked that the vertex count is even as perfect match can only be made with an even number of verticies.
 	 * However, we are given a graph representing a subgraph of verticies with odd degree. It is mathematically proven that the number
 	 * of verticies with odd degree in a graph will always be even.
 	 */
@@ -141,10 +142,8 @@ void getVertexDegree(int graph[N][N], int degree[N]) {
 	return;
 }
 
-/*
- * Function creates and returns a Minimum Spanning Tree (MST) in the form of an adjacency matrix
- * Calculated using Prim's algorithm
- */
+// Function creates and returns a Minimum Spanning Tree (MST) in the form of an adjacency matrix
+// Calculated using Prim's algorithm
 void minimumSpanningTree(int graph[N][N], int mst[N][N]) {
 	int visited[N], from, to;
 

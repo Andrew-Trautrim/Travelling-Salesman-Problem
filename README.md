@@ -5,6 +5,7 @@ The Travelling Salesman Problem (TSP) is a combinatorial problem posed in graph 
 
 Christofides algorithm is the best aproximate solution to the trading salesman problem known to date.  
 Algorithms pseudocode:  
+    Let G be a complete undirected weighted graph.  
     1. Create a minimum spanning tree T of G.  
     2. Let O be the set of vertices with odd degree in T. By the handshaking lemma, O has an even number of vertices.  
     3. Find a minimum-weight perfect matching M in the induced subgraph given by the vertices from O.  
@@ -14,23 +15,21 @@ Algorithms pseudocode:
     
 My program does this by representing the given graph in an adjacency matrix
 
-Complete Undirected Wighted Graph - G  
+Input: Complete Undirected Wighted Graph - G  
 <pre>
- - 26 25 23 31 18  
-26  - 21 22 27 29  
-25 21  - 24 19 20  
-23 22 24  - 12 30  
-31 27 19 12  - 25  
-18 29 20 30 25  - 
+ - 37 51 50 46 
+37  - 44 41 48 
+51 44  - 28 33 
+50 41 28  - 53 
+46 48 33 53  - 
 </pre>
 
 Output  
 <pre>
-0 -> 2  
-2 -> 1  
+0 -> 1  
 1 -> 3  
-3 -> 4  
-4 -> 5  
-5 -> 0  
-Weight: 123
+3 -> 2  
+2 -> 4  
+4 -> 0   
+Weight: 139
 </pre>

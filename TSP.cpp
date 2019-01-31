@@ -29,7 +29,7 @@ int edgeCount(int graph[N][N], bool complete) {
 	int count = 0;
 	for(int i = 0; i < N; ++i)
 		for(int j = 0; j < N; ++j)
-			if(graph[i][j] != I && j > i) // if there is an edge and it hasnt already been counted
+			if(j > i && graph[i][j] != I) // if there is an edge and it hasnt already been counted
 				count++;
 	return count;
 }
@@ -76,7 +76,7 @@ bool eulerianCircuit(int graph[N][N], int v, int e, int edgeCount, int from[], i
 
 // recursive function finds a perfect match in a graph
 // i.e. every vertex is connected only once
-// TODO minimum weight
+// TODO, fix perfect match to find minimum weight perfect match
 bool perfectMatch(int graph[N][N], int v, int vertexCount, int visited[N], int match[N][N]) {
 	
 	/*
@@ -207,6 +207,9 @@ void removeRepeatedVerticies(int graph[N][N], int from[], int to[], int edgeCoun
 	initialize(circuit);
 
 	int visited[N];
+	for(int i = 0; i< N; ++i) {
+		visited[i] = 0;
+	}
 	int pos = from[0]; // start at the beginning of the circuit
 
 	for(int i = 0; i < edgeCount; ++i) {
